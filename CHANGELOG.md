@@ -1,6 +1,5 @@
 # Changelog
 
-
 # 21.0.2 [#589](https://github.com/openfisca/openfisca-core/pull/589) [#600](https://github.com/openfisca/openfisca-core/pull/600) [#605](https://github.com/openfisca/openfisca-core/pull/605)
 
 _Note: the 21.0.1 and 21.0.0 versions have been unpublished due to performance issues_
@@ -82,7 +81,7 @@ class housing_occupancy_status(Variable):
    - The enum item (e.g. HousingOccupancyStatus.tenant)
    - The enum string identifier (e.g. "tenant")
    - The enum item index, though this is not recommanded.
-     - If you rely on index, make sure to specify an `__order__` attribute to all your enums to make sure each intem has the right index. See the enum 34 [doc](https://pypi.python.org/pypi/enum34/1.1.1).
+     - If you rely on index, make sure to specify an `__order__` attribute to all your enums to make sure each intem has the right index. See the enum34 [doc](https://pypi.python.org/pypi/enum34/1.1.1).
 
 > Example:
 ```py
