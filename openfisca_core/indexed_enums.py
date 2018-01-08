@@ -50,8 +50,7 @@ class EnumArray(np.ndarray):
         """
             Return the array of enum items corresponding to self
 
-            >>> enum_array
-            >>> EnumArray([<HousingOccupancyStatus.free_lodger: u'Free logder'>])
+            >>> enum_array = household('housing_occupancy_status', period)
             >>> enum_array[0]
             >>> 2  # Encoded value
             >>> enum_array.decode()[0]
