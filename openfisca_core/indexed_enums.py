@@ -9,7 +9,6 @@ class Enum(BaseEnum):
         Enum based on `enum34 <https://pypi.python.org/pypi/enum34/>`_, whose items have an index.
     """
 
-
     # Tweak enums to add an index attribute to each enum item
     def __init__(self, name):
         # When the enum item is initialized, self._member_names_ contains the names of the previously initialized items, so its length is the index of this item.
