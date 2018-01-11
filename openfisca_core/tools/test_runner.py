@@ -128,7 +128,8 @@ def _generate_tests_from_file(tax_benefit_system, path_to_file, options):
     if isinstance(name_filter, str):
         name_filter = name_filter.decode('utf-8')
     verbose = options.get('verbose')
-    test_only = options.get('test_only')
+    only = options.get('only')
+    ignore = options.get('ignore')
 
     tests = _parse_test_file(tax_benefit_system, path_to_file)
 
@@ -148,7 +149,7 @@ def _generate_tests_from_file(tax_benefit_system, path_to_file, options):
 
         def check():
             try:
-                _run_test(period_str, test, verbose, test_only, options)
+                _run_test(period_str, test, verbose, only, ignore, options)
             except:
                 log.error(title)
                 raise
@@ -219,7 +220,7 @@ def _parse_test_file(tax_benefit_system, yaml_path):
         yield yaml_path, test.get('name') or filename, unicode(test['scenario'].period), test
 
 
-def _run_test(period_str, test, verbose = False, test_only = None, options = {}):
+def _run_test(period_str, test, verbose = False, only = None, ignore = None, options = {}):
     absolute_error_margin = None
     relative_error_margin = None
     if test.get('absolute_error_margin') is not None:
@@ -232,12 +233,16 @@ def _run_test(period_str, test, verbose = False, test_only = None, options = {})
     simulation = scenario.new_simulation(trace = verbose)
     output_variables = test.get(u'output_variables')
     tested_variables = output_variables.keys()
-    if test_only is not None:
-        tested_variables = test_only
+    if only is not None and ignore is None:
+        tested_variables = only
+    if only is None and ignore is not None:
+        tested_variables = list(set(output_variables.keys()).difference(set(ignore)))
+    if only is not None and ignore is not None:
+        tested_variables = list(set(only).difference(set(ignore)))
     if output_variables is not None:
         try:
-            if test_only is not None:
-                for variable in test_only:
+            if only is not None:
+                for variable in only:
                     assert variable in output_variables.keys(), "La variable {} n'est pas présente dans les outputs variables du test".format(variable)
             for variable_name, expected_value in output_variables.iteritems():
                 if variable_name in tested_variables:

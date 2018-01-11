@@ -15,7 +15,8 @@ def build_parser():
     parser = add_tax_benefit_system_arguments(parser)
     parser.add_argument('-n', '--name_filter', default = None, help = "partial name of tests to execute. Only tests with the given name_filter in their name, file name, or keywords will be run.")
     parser.add_argument('-v', '--verbose', action = 'store_true', default = False, help = "increase output verbosity")
-    parser.add_argument('-t', '--test_only', nargs = '+', default = None, help = "Define output variables for which tests are run. If not specified, the test is run for all output variables defined in the yaml file of the test")
+    parser.add_argument('-o', '--only', nargs = '+', default = None, help = "Define output variables for which tests are run. If not specified, the test is run for all output variables defined in the yaml file of the test")
+    parser.add_argument('-i', '--ignore', nargs = '+', default = None, help = "Define output variables we want to exclude from the tests")
 
     return parser
 
@@ -30,7 +31,8 @@ def main():
     options = {
         'verbose': args.verbose,
         'name_filter': args.name_filter,
-        'test_only': args.test_only,
+        'only': args.only,
+        'ignore': args.ignore,
         }
 
     paths = map(os.path.abspath, args.path)
